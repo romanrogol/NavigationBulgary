@@ -6,6 +6,7 @@ import WhatsWaiting from './components/WhatsWaiting';
 import Program from './components/Program';
 import Gallery from './components/Gallery';
 import Price from './components/Price';
+import GalleryHotel from './components/GalleryHotel';
 import HowToJoin from './components/HowToJoin';
 import ContactForm from './components/ContactForm';
 import TurningPoint from './components/TurningPoint';
@@ -23,6 +24,7 @@ function App() {
       <Program />
       <Gallery />
       <Price />
+      <GalleryHotel />
       <HowToJoin />
       <ContactForm />
       <TurningPoint />

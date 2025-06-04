@@ -1,83 +1,171 @@
 html {
-    scroll-behavior: smooth;
-  }
+  scroll-behavior: smooth;
+}
 
 body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    font-size: 18px;
-    line-height: 1.6;
-  }
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+
+h1, h2 {
+  color: #2f4f4f;
+  text-align: center;
+}
+
+
+
+.cta-button,
+.contact-form button {
+  display: block;
+  margin: 1.5rem auto 0 auto;
+  text-align: center;
+  width:fit-content;
+}
+
+
+.hero-content p,
+.hero-content ul,
+.hero-content li,
+.about-section p,
+.about-section ul,
+.about-section li,
+.contact-form p,
+.contact-form input,
+.contact-form textarea {
+  text-align: left;
+}
+
+
+.section,
+.hero-content,
+.about-section,
+.contact-form {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  box-sizing: border-box;
+  background: rgba(148, 190, 216, 0.3);
   
-  ul {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  backdrop-filter: blur(10px);
+}
+
+
+.contact-form {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  /* align-items: stretch; */
+  justify-content: center;
+}
+
+
+.contact-form input,
+.contact-form textarea {
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  width: 100%;
+  resize: none;
+  margin-bottom: 1rem;
+}
+
+.contact-form textarea {
+  min-height: 120px;
+}
+
+/* .contact-form button {
+  padding: 0.75rem 2rem;
+  background-color: #4CAF50;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+} */
+
+.contact-form button:hover {
+  background-color: #94d8bd;
+}
+
+.form-status {
+  margin-top: 1rem;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: center;
+}
+
+
+ul {
   list-style-type: none;
   padding-left: 0;
+}
+
+
+/* 📱 Базовая адаптивность для мобильных экранов */
+@media (max-width: 768px) {
+  .section,
+  .hero-content,
+  .about-section,
+  .contact-form {
+    padding: 1rem;
+    width: 100%;
+    box-sizing: border-box;
   }
-  
+
   h1, h2 {
-    color: #2f4f4f;
+    font-size: 1.5rem;
+    text-align: center;
   }
-  
-  .section {
-    position: relative;
-    /* height: 100vh; */
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /* text-align: center; */
-    padding: 2rem;
+
+  p, li {
+    font-size: 1rem;
+    text-align: left;
   }
 
   .cta-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 0.8rem 1.2rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 1rem;
-  }
-  
-  .contact-form {
-    position: relative;
-    /* height: 100vh; */
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /* text-align: center; */
-    padding: 2rem;
+    display: inline-block;    
+    width: auto;
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
+    display: block;
+    margin: 1.5rem auto 0 auto;
+    width: fit-content;
   }
 
-  .contact-form form {
-    display: flex;
-    flex-direction: column;
-    max-width: 400px;
+  .image-gallery-slide img {
+    max-height: 60vh;
+    object-fit: cover;
   }
-  
-  .contact-form input, .contact-form textarea {
-    margin-bottom: 1rem;
-    padding: 0.5rem;
+}
+
+/* 📱 Для совсем узких экранов */
+@media (max-width: 480px) {
+  .cta-button {
+    
     font-size: 1rem;
   }
-  
-  /* Адаптивность */
-  @media (max-width: 768px) {
-    section {
-      padding: 1rem;
-    }
-  
-    h1 {
-      font-size: 1.5rem;
-    }
-  
-    .cta-button {
-      width: 100%;
-      font-size: 1rem;
-    }
+
+  h1, h2 {
+    font-size: 1.3rem;
   }
-  
+
+  .hero-content,
+  .about-section {
+    align-items: flex-start;
+  }
+}

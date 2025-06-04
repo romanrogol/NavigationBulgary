@@ -1,12 +1,10 @@
-.hero {
+/* .hero {
     position: relative;
     height: 100vh;
-    /* color: white; */
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
     padding: 2rem;
   }
   
@@ -27,15 +25,107 @@
   }
   
   .cta-button {
-    margin-top: 2rem;
-    background-color: #4CAF50;
-    color: white;
-    padding: 0.8rem 1.6rem;
-    font-size: 1.1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
+  display: inline-block;           
+  margin: 1.5rem auto 0 auto;      
+  background-color: #4CAF50;
+  color: white;
+  padding: 0.8rem 1.6rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #45a049;
+}
+
+   */
+
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* текст по левому краю */
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* Заголовок по центру */
+.hero-content h1 {
+  width: 100%;
+  text-align: center;
+  font-size: 40px;
+}
+
+/* Текстовые блоки по левому краю */
+.hero-content p {
+  text-align: left;
+  width: 100%;
+}
+
+/* Кнопка по центру */
+.cta-button {
+  display: inline-block;
+  margin: 2rem auto 0 auto;
+  background-color: #4CAF50;
+  color: white;
+  padding: 0.8rem 1.6rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #45a049;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .hero {
+    padding: 1rem;
   }
-  
+
+  .hero-content {
+    padding: 1rem;
+  }
+
+  .hero-content h1 {
+    font-size: 1.5rem;
+  }
+
+  .cta-button {
+    font-size: 1rem;
+  }
+}
