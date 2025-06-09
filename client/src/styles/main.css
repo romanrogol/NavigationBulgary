@@ -60,8 +60,7 @@ h1, h2 {
 
 
 .contact-form {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 16px;
+  background: rgba(148, 190, 216, 0.3);
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   color: #fff;

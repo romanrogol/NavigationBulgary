@@ -1,4 +1,5 @@
 import BackgroundVideo from './components/BackgroundVideo';
+import FloatingQuestion from './components/FloatingQuestion/FloatingQuestion';
 import Hero from './components/Hero';
 import About from './components/About';
 import WhyBulgaria from './components/WhyBulgaria';
@@ -17,6 +18,7 @@ function App() {
   return (
     <>
       <BackgroundVideo />
+      <FloatingQuestion />
       <Hero />
       <About />
       <WhyBulgaria />
