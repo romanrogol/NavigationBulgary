@@ -185,7 +185,7 @@
   },
   "scripts": {
     "build": "vite build",
-    "start": "vite"
+    "start": "vite preview"
   },
   "keywords": [],
   "author": "",

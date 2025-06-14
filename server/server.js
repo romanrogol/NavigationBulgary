@@ -82,7 +82,7 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// ✅ Сначала API-роут
+
 app.post('/send-message', async (req, res) => {
   const { name, phone, message } = req.body;
 
@@ -112,11 +112,12 @@ app.post('/send-message', async (req, res) => {
   }
 });
 
-// ✅ Потом отдача React-статических файлов
+
 app.use(express.static(path.join(__dirname, '../client/dist')));
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
+
 
 app.listen(PORT, () => {
   console.log(`✅ Сервер запущен на порту ${PORT}`);

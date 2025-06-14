@@ -1,4 +1,4 @@
-/* src/components/BackgroundVideo.css */
+
 .video-bg {
   position: fixed;
   top: 0;
@@ -7,5 +7,5 @@
   height: 100vh;
   object-fit: cover;
   z-index: -1;
-  pointer-events: none; /* Чтобы мышь "проходила сквозь" */
+  pointer-events: none; 
 }
