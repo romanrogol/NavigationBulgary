@@ -1,18 +1,22 @@
+
 // import express from 'express';
 // import cors from 'cors';
 // import dotenv from 'dotenv';
 // import fetch from 'node-fetch';
 
-// dotenv.config();
+// dotenv.config(); 
 
 // const app = express();
 // const PORT = process.env.PORT || 3001;
 
 // const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 // const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+// // console.log('TOKEN:', TELEGRAM_BOT_TOKEN);
+// // console.log('CHAT_ID:', TELEGRAM_CHAT_ID);
 
 // app.use(cors());
 // app.use(express.json());
+
 
 // app.post('/send-message', async (req, res) => {
 //   const { name, phone, message } = req.body;
@@ -20,119 +24,106 @@
 //   const text = `📩 Новая заявка с лендинга:\n👤 Имя: ${name}\n📱 Телефон: ${phone}\n💬 Комментарий: ${message || 'Без комментария'}`;
 
 //   try {
-//     console.log('TOKEN:', TELEGRAM_BOT_TOKEN);
-// console.log('CHAT_ID:', TELEGRAM_CHAT_ID);
-
-//     const telegramRes = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+//     const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
 //       method: 'POST',
 //       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text }),
+//       body: JSON.stringify({
+//         chat_id: TELEGRAM_CHAT_ID,
+//         text,
+//       }),
 //     });
 
-//     if (!telegramRes.ok) throw new Error('Telegram error');
+//     const result = await response.json();
+//     console.log('📨 Telegram response:', result);
+
+//     if (!result.ok) {
+//       throw new Error(result.description || 'Ошибка Telegram API');
+//     }
 
 //     res.status(200).json({ success: true, message: 'Message sent' });
 //   } catch (error) {
-//     res.status(500).json({ success: false, error: 'Failed to send message' });
+//     console.error('❌ Ошибка:', error.message);
+//     res.status(500).json({ success: false, error: 'Ошибка Telegram API' });
 //   }
 // });
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
-// import express from 'express';
-// import cors from 'cors';
-// import dotenv from 'dotenv';
-// import fetch from 'node-fetch';
-
-// dotenv.config();
-
-// const app = express();
-// const PORT = process.env.PORT || 3001;
-
-// app.use(cors());
-// app.use(express.json());
-
-// const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-// const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
-
-// app.post('/send-message', async (req, res) => {
-//   const { name, phone, message } = req.body;
-
-//   const text = `📩 Новая заявка:\nИмя: ${name}\nТелефон: ${phone}\nКомментарий: ${message || 'Без комментария'}`;
-
-//   try {
-//     const telegramRes = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-//       method: 'POST',
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text }),
-//     });
-
-//     const telegramData = await telegramRes.json();
-//     console.log('Telegram response:', telegramData);
-
-//     if (!telegramRes.ok) throw new Error('Ошибка Telegram API');
-
-//     res.json({ success: true });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ success: false, error: error.message });
-//   }
-// });
 
 // app.listen(PORT, () => {
-//   console.log(`Сервер запущен на порту ${PORT}`);
+//   console.log(`Server started on port ${PORT}`);
 // });
-// server.js
+
+
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import fetch from 'node-fetch';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-dotenv.config(); // Загружаем переменные из .env
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
-console.log('TOKEN:', TELEGRAM_BOT_TOKEN);
-console.log('CHAT_ID:', TELEGRAM_CHAT_ID);
 
-app.use(cors());
+
+app.use(helmet());
+
+
+app.use(cors({
+  origin: 'https://navigationbulgary.com', 
+}));
+
 app.use(express.json());
 
-// Эндпоинт для получения заявки и отправки в Telegram
+
+const limiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 10,
+  message: 'Слишком много запросов. Попробуйте позже.',
+});
+app.use(limiter);
+
+// 📦 Отдача React (client/build)
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+app.use(express.static(path.join(__dirname, '../client/build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+
+
 app.post('/send-message', async (req, res) => {
   const { name, phone, message } = req.body;
 
-  const text = `📩 Новая заявка с лендинга:\n👤 Имя: ${name}\n📱 Телефон: ${phone}\n💬 Комментарий: ${message || 'Без комментария'}`;
+  if (
+    !name || typeof name !== 'string' || name.length > 100 ||
+    !phone || typeof phone !== 'string' || phone.length > 20
+  ) {
+    return res.status(400).json({ success: false, error: 'Некорректные данные формы' });
+  }
+
+  const text = `📩 Новая заявка:\n👤 Имя: ${name}\n📱 Телефон: ${phone}\n💬 Комментарий: ${message || 'Без комментария'}`;
 
   try {
     const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
-        text,
-      }),
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text }),
     });
 
     const result = await response.json();
-    console.log('📨 Telegram response:', result);
-
-    if (!result.ok) {
-      throw new Error(result.description || 'Ошибка Telegram API');
-    }
+    if (!result.ok) throw new Error(result.description || 'Ошибка Telegram API');
 
     res.status(200).json({ success: true, message: 'Message sent' });
   } catch (error) {
-    console.error('❌ Ошибка:', error.message);
+    console.error('Ошибка при отправке:', error.message);
     res.status(500).json({ success: false, error: 'Ошибка Telegram API' });
   }
 });
 
-// Запускаем сервер
 app.listen(PORT, () => {
-  console.log(`🚀 Сервер запущен на http://localhost:${PORT}`);
+  console.log(`✅ Сервер запущен на порту ${PORT}`);
 });
