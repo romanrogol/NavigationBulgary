@@ -184,9 +184,9 @@
     "yocto-queue": "^0.1.0"
   },
   "scripts": {
-    "build": "vite build",
-    "start": "vite preview"
-  },
+  "postinstall": "npm install",
+  "build": "vite build"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
