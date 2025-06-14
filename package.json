@@ -2,9 +2,12 @@
   "name": "navigation-landing",
   "version": "1.0.0",
   "scripts": {
-  "build": "npm run build --prefix client",
-  "start": "node server/server.js"
-}
-
+    "build": "npm run build --prefix client",
+    "start": "node server/server.js"
+  },
+  "dependencies": {
+    "vite": "^6.3.5",
+    "@vitejs/plugin-react": "^4.5.2"
+  }
 }
 
