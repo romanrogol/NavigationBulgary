@@ -69,16 +69,11 @@ const PORT = process.env.PORT || 3001;
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 app.use(helmet());
-
-
-app.use(cors({
-  origin: 'https://navigationbulgary.com', 
-}));
-
+app.use(cors({ origin: 'https://navigationbulgary.com' }));
 app.use(express.json());
-
 
 const limiter = rateLimit({
   windowMs: 60 * 1000,
@@ -87,14 +82,7 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// 📦 Отдача React (client/build)
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-app.use(express.static(path.join(__dirname, '../client/dist')));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-});
-
-
+// ✅ Сначала API-роут
 app.post('/send-message', async (req, res) => {
   const { name, phone, message } = req.body;
 
@@ -122,6 +110,12 @@ app.post('/send-message', async (req, res) => {
     console.error('Ошибка при отправке:', error.message);
     res.status(500).json({ success: false, error: 'Ошибка Telegram API' });
   }
+});
+
+// ✅ Потом отдача React-статических файлов
+app.use(express.static(path.join(__dirname, '../client/dist')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
 app.listen(PORT, () => {
