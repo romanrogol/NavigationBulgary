@@ -112,6 +112,13 @@ app.post('/send-message', async (req, res) => {
   }
 });
 
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self'; img-src 'self' data: https://api.qrserver.com;"
+  );
+  next();
+});
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.get(/(.*)/, (req, res) => {
