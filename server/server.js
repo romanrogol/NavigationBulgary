@@ -80,7 +80,7 @@ const limiter = rateLimit({
   max: 10,
   message: 'Слишком много запросов. Попробуйте позже.',
 });
-app.use(limiter);
+app.use('/send-message', limiter);
 
 
 app.post('/send-message', async (req, res) => {
