@@ -4,12 +4,8 @@
   "scripts": {
     "install-client": "cd client && npm install",
     "install-server": "cd server && npm install",
-    "build": "cd client && npm run build",
-    "start": "cd server && node index.js"
-  },
-  "dependencies": {
-    "vite": "^6.3.5",
-    "@vitejs/plugin-react": "^4.5.2"
+    "build": "npm run install-client && cd client && npm run build",
+    "start": "npm run install-server && cd server && node index.js"
   }
 }
 
