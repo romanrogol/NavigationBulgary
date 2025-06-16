@@ -14,16 +14,12 @@ const ContactForm = () => {
     setStatus(null);
 
     try {
-      // const response = await fetch('http://localhost:3001/send-message',{ Заменить your-backend-domain.com на адрес сервера Railway с подключённым доменом или временным .railway.app.
-
- 
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/send-message`, {
-
-      
+      const response = await fetch(`${import.meta.env.VITE_REACT_APP_API_URL}/send-message`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, phone, message }),
       });
+
 
       const data = await response.json();
 

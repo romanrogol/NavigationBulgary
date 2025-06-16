@@ -10,6 +10,8 @@ const FloatingQuestion = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
   const formRef = useRef(null);
 
+  const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
+
   // Обновление isMobile при изменении ширины окна
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 480);
@@ -45,7 +47,7 @@ const FloatingQuestion = () => {
     }
 
     try {
-      const response = await fetch('/send-message', {
+      const response = await fetch(`${API_URL}/send-message`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, phone, message: question }),
